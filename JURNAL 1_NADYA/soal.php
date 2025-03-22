@@ -1,7 +1,7 @@
 <?php
 // **********************  1  **************************  
 // Inisialisasi variabel untuk menyimpan nilai input dan error
-$nama = $email = $nim = $mobil = $jurusan = $fakultas = "";
+$nama = $email = $nim = $jurusan = $fakultas = "";
 $namaErr = $emailErr = $nimErr = $jurusanErr = $fakultasErr = "";
 
 
@@ -28,7 +28,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
      $email = $_POST["email"];
      if (empty($email)) {
          $emailErr = "Email wajib diisi";
-     }
+     } elseif (htmlspecialchars($email)) {
+        $emailErr = "Email tidak valid";
+    }
  
     // **********************  4  **************************  
     // - Tangkap nilai NIM yang ada pada form HTML (Lihat Task 7)
@@ -98,37 +100,37 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <!-- Tambahkan value di tiap form-group/kolom untuk menampilkan kembali data di form setelah submit (retaining input) -->
             <!-- Hint : value pada input form harus berisi variabel yang menyimpan data input -->
             <div class="form-group">
-            <label for="nama">Nama</label>
-            <input type="text" id="nama" name="nama" >
-            <span class="error"><?php echo $namaErr ? "* $namaErr" : ""; ?></span>
+                <label for="nama">Nama</label>
+                <input type="text" id="nama" name="nama" >
+                <span class="error"><?php echo $namaErr ? "* $namaErr" : ""; ?></span>
             </div>
 
             <div class="form-group">
-            <label for="email">Email</label>
-            <input type="text" id="email" name="email" >
-            <span class="error"><?php echo $emailErr ? "* $emailErr" : ""; ?></span>
+                <label for="email">Email</label>
+                <input type="text" id="email" name="email" >
+                <span class="error"><?php echo $emailErr ? "* $emailErr" : ""; ?></span>
             </div>
 
             <div class="form-group">
-            <label for="nim">NIM</label>
-            <input type="text" id="nim" name="nim" >
-            <span class="error"><?php echo $nimErr ? "* $nimErr" : ""; ?></span>
+                <label for="nim">NIM</label>
+                <input type="text" id="nim" name="nim" >
+                <span class="error"><?php echo $nimErr ? "* $nimErr" : ""; ?></span>
             </div>
 
             <div class="form-group">
-            <label for="jurusan">Jurusan</label>
-            <input type="text" id="jurusan" name="jurusan" >
-            <span class="error"><?php echo $jurusanErr ? "* $jurusanErr" : ""; ?></span>
+                <label for="jurusan">Jurusan</label>
+                <input type="text" id="jurusan" name="jurusan" >
+                <span class="error"><?php echo $jurusanErr ? "* $jurusanErr" : ""; ?></span>
             </div>
 
             <div class="form-group">
-            <label for="fakultas">Fakultas</label>
-            <input type="text" id="fakultas" name="fakultas" >
-            <span class="error"><?php echo $fakultasErr ? "* $fakultasErr" : ""; ?></span>
+                <label for="fakultas">Fakultas</label>
+                <input type="text" id="fakultas" name="fakultas" >
+                <span class="error"><?php echo $fakultasErr ? "* $fakultasErr" : ""; ?></span>
             </div>
 
             <div class="button-container">
-            <button type="submit">Daftar</button>
+                <button type="submit">Daftar</button>
             </div>
         </form>
     </div>
@@ -142,6 +144,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <div class="table-container">
     <!-- **********************  9  ************************** -->
     <!-- Tampilkan data pendaftaran dalam bentuk tabel yang baru saja diinput -->
+            <table>
+                <thead>
+                    <tr>
+                        <th width="20%">Nama</th>
+                        <th width="20%">Email</th>
+                        <th width="15%">NIM</th>
+                        <th width="15%">Jurusan</th>
+                        <th width="30%">Fakultas</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><?php echo $nama; ?></td>
+                        <td><?php echo $email; ?></td>
+                        <td><?php echo $nim; ?></td>
+                        <td><?php echo $jurusan; ?></td>
+                        <td><?php echo $fakultas; ?></td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
     <?php } ?>
