@@ -6,7 +6,7 @@ $namaErr = $emailErr = $nimErr = $jurusanErr = $fakultasErr = "";
 
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-// **********************  2  **************************  
+    // **********************  2  **************************  
     // - Tangkap nilai nama yang ada pada form HTML (Lihat Task 7)
     // - Validasi agar nama tidak boleh kosong
     // - Validasi agar nama hanya berupa abjad (Hint : gunakan fungsi preg_match (atau fungsi lainnya))
@@ -15,7 +15,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $nama = $_POST["nama"];
     if (empty($nama)) {
         $namaErr = "Nama wajib diisi";
-    } elseif (!ctype_alpha($nama)) {
+    } elseif (!preg_match("/^[a-zA-Z ]*$/", $_POST["nama"])) {
         $namaErr = "Nama hanya boleh berupa abjad";
     }
 
@@ -24,11 +24,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // - Memeriksa apakah email kosong
     // - Memeriksa apakah format email valid (Hint : gunakan fungsi filter_var)
     // silakan taruh kode kalian di bawah
-     // Validasi Email
-     $email = $_POST["email"];
-     if (empty($email)) {
-         $emailErr = "Email wajib diisi";
-     } elseif (htmlspecialchars($email)) {
+
+    $email = $_POST["email"];
+    if (empty($email)) {
+        $emailErr = "Email wajib diisi";
+    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $emailErr = "Email tidak valid";
     }
  
@@ -43,6 +43,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } elseif (!ctype_digit($nim)) {
         $nimErr = "NIM harus berupa angka";
     }
+
     // **********************  5  **************************  
     // - Tangkap nilai jurusan yang ada pada form HTML (Lihat Task 7)
     // - Validasi agar jurusan tidak boleh kosong
@@ -52,7 +53,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $jurusan = $_POST["jurusan"];
     if (empty($jurusan)) {
         $jurusanErr = "Jurusan wajib diisi";
-    } elseif (!ctype_alpha($jurusan)) {
+    } elseif (!preg_match("/^[a-zA-Z ]*$/", $_POST["jurusan"])) {
         $jurusanErr = "jurusan hanya boleh berupa abjad";}
 
     // **********************  6  **************************  
@@ -64,9 +65,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $fakultas = $_POST["fakultas"];
     if (empty($fakultas)) {
         $fakultasErr = "Fakultas wajib diisi";
-    } elseif (!ctype_alpha($fakultas)) {
-        $fakultasErr = "Fakultas hanya boleh berupa abjad";}
-    
+    } elseif (!preg_match("/^[a-zA-Z ]*$/", $_POST["fakultas"])) {
+        $fakultasErr = "Fakultas hanya boleh berupa abjad";
+    }
     
 }?>
 
@@ -104,6 +105,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <input type="text" id="nama" name="nama" >
                 <span class="error"><?php echo $namaErr ? "* $namaErr" : ""; ?></span>
             </div>
+            
 
             <div class="form-group">
                 <label for="email">Email</label>
@@ -137,11 +139,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     <!-- **********************  8  ************************** -->
     <!-- Panggil variabel yang berisi pesan error (Hint : gunakan if dan metode post) -->
-    <?php { ?>
+    <?php if ($_SERVER["REQUEST_METHOD"] == "POST" && !$namaErr && !$emailErr && !$nimErr && !$jurusanErr && !$fakultasErr) { ?>
+        <div class="container">
+            <h3>Data Pendaftaran</h3>
+            <div class="table-container">
 
-    <div class="container">
-        <h3>Data Pendaftaran</h3>
-        <div class="table-container">
     <!-- **********************  9  ************************** -->
     <!-- Tampilkan data pendaftaran dalam bentuk tabel yang baru saja diinput -->
             <table>
