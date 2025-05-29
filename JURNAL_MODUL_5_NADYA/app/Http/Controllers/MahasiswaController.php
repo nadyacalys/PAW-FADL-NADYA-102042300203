@@ -81,7 +81,11 @@ class MahasiswaController extends Controller
     ]);
     }
   
-    public function destroy($id)
+
+
+    //TODO ( Praktikan Nomor Urut 4 )
+    // Tambahkan fungsi destroy yang akan menghapus data Mahasiswa yang dipilih
+     public function destroy($id)
     {
     $mahasiswa = Mahasiswa::find($id);
     if (!$mahasiswa) {
@@ -95,8 +99,5 @@ class MahasiswaController extends Controller
         'message' => 'Data Mahasiswa Berhasil Dihapus!',
     ]);
 }
-
-    //TODO ( Praktikan Nomor Urut 4 )
-    // Tambahkan fungsi destroy yang akan menghapus data Mahasiswa yang dipilih
 }
 
